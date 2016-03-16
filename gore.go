@@ -1,0 +1,5 @@
+package gore
+
+func main() {
+
+}
