@@ -115,3 +115,7 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+
+### Gore ###
+config.ini
