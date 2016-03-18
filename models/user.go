@@ -27,6 +27,12 @@ func (u User) GetProjects() []Project {
     return projects
 }
 
+func (u User) GetProject(projectName string) Project {
+    var project Project
+    modules.DB.First(&project, "user_id = ? AND safe_name = ?", u.ID, projectName)
+    return project
+}
+
 func GetUser(username string) User {
     var user User
     modules.DB.First(&user, "username = ?", username)

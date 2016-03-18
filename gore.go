@@ -22,6 +22,7 @@ func main() {
 
     // API routes
     g.GET("/api/:user", apicon.GetUser)
+    g.GET("/api/:user/:project", apicon.GetProject)
 
     // Run Gore
     g.Run(":" + modules.CONFIG.Section("web").Key("PORT").String())

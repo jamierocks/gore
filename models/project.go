@@ -31,9 +31,16 @@ func (p Project) GetVersions() []ProjectVersion {
     return versions
 }
 
+func (p Project) GetVersion(version string) ProjectVersion {
+    var projectVersion ProjectVersion
+    modules.DB.First(&projectVersion, "project_id = ? AND version = ?", p.ID, version)
+    return projectVersion
+}
+
 type ProjectVersion struct {
     ID int64 `gorm:"primary_key"`
     Version string
+    Channel string
 
     Project Project
     ProjectID int64
