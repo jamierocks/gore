@@ -7,30 +7,34 @@
 
     <title>{% block title %}{% endblock %} - Gore</title>
 
-    <link rel="stylesheet" href="https://www.lexteam.xyz/violet/release/1.1.1/violet.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" />
 </head>
 <body>
 
-<ul class="nav-bar">
-    <li class="brand right">GORE</li>
-
-    <li><a href="/">HOME</a></li>
-    <li><a href="/explore">EXPLORE</a></li>
-</ul>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo">Gore</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/explore"><i class="material-icons">explore</i></a></li>
+        </ul>
+    </div>
+</nav>
 
 <main>
     {% block content %}{% endblock %}
 </main>
 
-<footer class="footer">
-    <ul>
-        <li><a href="https://www.jamierocks.uk/">Copyright (c) Jamie Mansfield</a></li>
-    </ul>
-    <h3 class="brand">GORE</h3>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            Copyright &copy; 2016, <a href="https://www.jamierocks.uk/">Jamie Mansfield</a>.
+        </div>
+    </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
 </body>
 </html>

@@ -6,10 +6,10 @@ import (
     "net/http"
     "encoding/json"
     "io/ioutil"
+    "github.com/jamierocks/gore/models"
     "github.com/jamierocks/gore/modules"
     "github.com/google/go-github/github"
     "gopkg.in/macaron.v1"
-    "github.com/jamierocks/gore/models"
 )
 
 type AccessTokenResponse struct {

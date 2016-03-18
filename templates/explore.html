@@ -3,12 +3,12 @@
 {% block title %}Explore{% endblock %}
 
 {% block content %}
-<div class="page-container">
+<div class="container">
     <h1 class="title">All Projects</h1>
 
-    <ul>
+    <ul class="collection">
         {% for project in projects %}
-        <li>{{ project.SafeName }}</li>
+            <li class="collection-item">{{ project.GetOwner().Username }}/{{ project.Name }}</li>
         {% endfor %}
     </ul>
 </div>

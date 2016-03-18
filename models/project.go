@@ -19,7 +19,7 @@ type Project struct {
     UpdatedAt time.Time
 }
 
-func (p Project) getOwner() User {
+func (p Project) GetOwner() User {
     var user User
     modules.DB.Model(&p).Related(&user)
     return user
