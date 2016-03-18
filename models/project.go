@@ -25,6 +25,12 @@ func (p Project) getOwner() User {
     return user
 }
 
+func (p Project) GetVersions() []ProjectVersion {
+    var versions []ProjectVersion
+    modules.DB.Model(&p).Related(&versions)
+    return versions
+}
+
 type ProjectVersion struct {
     ID int64 `gorm:"primary_key"`
     Version string
