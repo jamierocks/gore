@@ -1,11 +1,13 @@
 package main
 
 import (
+    "log"
+    "net/http"
     "github.com/jamierocks/gore/modules"
     "github.com/jamierocks/gore/models"
     apicon "github.com/jamierocks/gore/controller/api"
     "github.com/jamierocks/gore/controller/auth"
-    "github.com/gin-gonic/gin"
+    "gopkg.in/macaron.v1"
 )
 
 func main() {
@@ -18,18 +20,21 @@ func main() {
     // Run migrations
     models.AutoMigrate()
 
-    // Construct Gin
-    g := gin.Default()
-    g.Static("/maven", "storage")
+    // Construct Macaron
+    m := macaron.Classic()
+    m.Use(macaron.Renderer())
 
     // API routes
-    g.GET("/api/:user", apicon.GetUser)
-    g.GET("/api/:user/:project", apicon.GetProject)
+    m.Group("/api", func() {
+        m.Get("/:user", apicon.GetUser)
+        m.Get("/:user/:project", apicon.GetProject)
+    })
 
     // Auth routes
-    g.GET("/login", auth.GetLogin)
-    g.GET("/auth/callback", auth.GetCallback)
+    m.Get("/login", auth.GetLogin)
+    m.Get("/auth/callback", auth.GetCallback)
 
     // Run Gore
-    g.Run(":" + modules.CONFIG.Section("web").Key("PORT").String())
+    log.Print("Listening on 0.0.0.0:" + modules.CONFIG.Section("web").Key("PORT").String())
+    http.ListenAndServe("0.0.0.0:" + modules.CONFIG.Section("web").Key("PORT").String(), m)
 }
