@@ -35,7 +35,7 @@ func (u User) GetProject(projectName string) Project {
 
 func GetUser(username string) User {
     var user User
-    modules.DB.First(&user, "username = ?", username)
+    modules.DB.FirstOrInit(&user, "username = ?", username, User{Type: -1})
     return user
 }
 
@@ -43,4 +43,8 @@ func GetAllUsers() []User {
     var users []User
     modules.DB.Find(&users)
     return users
+}
+
+func DoesUserExist(username string) bool {
+    return GetUser(username).Type != -1
 }

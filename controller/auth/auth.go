@@ -7,7 +7,9 @@ import (
     "encoding/json"
     "io/ioutil"
     "github.com/jamierocks/gore/modules"
+    "github.com/google/go-github/github"
     "gopkg.in/macaron.v1"
+    "github.com/jamierocks/gore/models"
 )
 
 type AccessTokenResponse struct {
@@ -16,7 +18,27 @@ type AccessTokenResponse struct {
 
 func GetLogin(ctx *macaron.Context) {
     if isAuthenticated(ctx) {
-        // TODO: check user is in db and if not create
+        data := url.Values{}
+        data.Set("access_token", ctx.GetCookie("access_token"))
+
+        client := &http.Client{}
+        r, _ := http.NewRequest("POST", "https://api.github.com/user", bytes.NewBufferString(data.Encode()))
+        r.Header.Set("Accept", "application/json")
+
+        resp, _ := client.Do(r)
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var res github.User
+        json.Unmarshal(body, &res)
+
+        if !models.DoesUserExist(*res.Login) {
+            modules.DB.Create(&models.User{
+                Username: *res.Login,
+                FullName: *res.Name,
+                Type: 0,
+            })
+        }
+
         ctx.Redirect("/", 308)
     } else {
         ctx.Redirect("https://github.com/login/oauth/authorize?scope=user:email&client_id=" +
