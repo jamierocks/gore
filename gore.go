@@ -27,6 +27,7 @@ func main() {
     m.Use(pongo2.Pongoer())
 
     // Base routes
+    m.Get("/", controller.GetHomepage)
     m.Get("/explore", controller.GetExplore)
 
     // API routes
