@@ -5,8 +5,10 @@ import (
     "net/http"
     "github.com/jamierocks/gore/modules"
     "github.com/jamierocks/gore/models"
+    "github.com/jamierocks/gore/controller"
     apicon "github.com/jamierocks/gore/controller/api"
-    "github.com/jamierocks/gore/controller/auth"
+    authcon"github.com/jamierocks/gore/controller/auth"
+    "github.com/go-macaron/pongo2"
     "gopkg.in/macaron.v1"
 )
 
@@ -22,7 +24,10 @@ func main() {
 
     // Construct Macaron
     m := macaron.Classic()
-    m.Use(macaron.Renderer())
+    m.Use(pongo2.Pongoer())
+
+    // Base routes
+    m.Get("/explore", controller.GetExplore)
 
     // API routes
     m.Group("/api", func() {
@@ -31,8 +36,8 @@ func main() {
     })
 
     // Auth routes
-    m.Get("/login", auth.GetLogin)
-    m.Get("/auth/callback", auth.GetCallback)
+    m.Get("/login", authcon.GetLogin)
+    m.Get("/auth/callback", authcon.GetCallback)
 
     // Run Gore
     log.Print("Listening on 0.0.0.0:" + modules.CONFIG.Section("web").Key("PORT").String())

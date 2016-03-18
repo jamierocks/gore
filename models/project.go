@@ -54,3 +54,9 @@ func (v ProjectVersion) getProject() Project {
     modules.DB.Model(&v).Related(&project)
     return project
 }
+
+func GetAllProjects() []Project {
+    var projects []Project
+    modules.DB.Find(&projects)
+    return projects
+}

@@ -10,12 +10,13 @@ import (
     "gopkg.in/macaron.v1"
 )
 
-type GitHubResponse struct {
+type AccessTokenResponse struct {
     AccessToken string `json:"access_token"`
 }
 
 func GetLogin(ctx *macaron.Context) {
     if isAuthenticated(ctx) {
+        // TODO: check user is in db and if not create
         ctx.Redirect("/", 308)
     } else {
         ctx.Redirect("https://github.com/login/oauth/authorize?scope=user:email&client_id=" +
@@ -38,11 +39,11 @@ func GetCallback(ctx *macaron.Context) {
     resp, _ := client.Do(r)
     body, _ := ioutil.ReadAll(resp.Body)
 
-    var res GitHubResponse
+    var res AccessTokenResponse
     json.Unmarshal(body, &res)
     ctx.SetCookie("access_token", res.AccessToken)
 
-    ctx.Redirect("/", 308)
+    ctx.Redirect("/login", 308)
 }
 
 func isAuthenticated(ctx *macaron.Context) bool {

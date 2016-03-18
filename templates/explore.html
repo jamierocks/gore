@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <h1 class="title">All Projects</h1>
+
+    <ul>
+        {% for project in projects %}
+        <li>{{ project.SafeName }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
